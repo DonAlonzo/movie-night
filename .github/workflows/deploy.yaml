@@ -1,0 +1,39 @@
+name: Deploy
+on: workflow_dispatch
+jobs:
+  deploy:
+    name: Deploy
+    if: github.ref =='refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Update deployment (client)
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: '.k8s/values.yaml'
+          propertyPath: 'images.client.tag'
+          value: ${{ github.sha }}
+          commitChange: false
+          updateFile: true
+
+      - name: Update deployment (server)
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: '.k8s/values.yaml'
+          propertyPath: 'images.server.tag'
+          value: ${{ github.sha }}
+          commitChange: false
+          updateFile: true
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        if: ${{ !env.ACT }}
+        with:
+          title: '[deploy] ${{ github.sha }}'
+          body: ''
+          commit-message: '[deploy] ${{ github.sha }}'
+          delete-branch: true
+          reviewers: |
+            DonAlonzo

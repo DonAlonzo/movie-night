@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon --watch src -r esm src/main.js",
+    "start": "node -r esm src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "2.0.13"
+  },
+  "dependencies": {
+    "apollo-server-core": "3.4.0",
+    "apollo-server-express": "3.4.0",
+    "esm": "3.2.25",
+    "express": "4.17.1",
+    "express-bearer-token": "2.4.0",
+    "graphql": "15.6.1",
+    "lodash": "4.17.21",
+    "mongodb": "4.1.3"
+  }
+}

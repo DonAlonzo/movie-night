@@ -1,0 +1,10 @@
+host: movie.boman.io
+images:
+  client:
+    repository: donalonzo/client
+    tag: f8fed107e909620b4650dd14349fb54b4d61ecca
+    pullPolicy: Always
+  server:
+    repository: donalonzo/server
+    tag: f8fed107e909620b4650dd14349fb54b4d61ecca
+    pullPolicy: Always
