@@ -1,0 +1,12 @@
+host: movie-night.boman.io
+mongo:
+  host: mongo.infrastructure.svc.cluster.local
+images:
+  frontend:
+    repository: donalonzo/movie-night-frontend
+    tag: latest
+    pullPolicy: Always
+  backend:
+    repository: donalonzo/movie-night-backend
+    tag: latest
+    pullPolicy: Always

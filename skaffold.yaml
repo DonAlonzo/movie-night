@@ -1,35 +1,66 @@
 apiVersion: skaffold/v2beta24
 kind: Config
-build:
-  artifacts:
-    - image: donalonzo/movie-night-client
-      context: client
-      docker:
-        buildArgs:
-          mode: watch
-      sync:
-        infer:
-          - "public/*"
-          - "src/**"
-    - image: donalonzo/movie-night-server
-      context: server
-      docker:
-        buildArgs:
-          mode: watch
-      sync:
-        infer:
-          - "src/**"
-deploy:
-  helm:
-    releases:
+profiles:
+- name: production
+  build:
+    cluster:
+      dockerConfig:
+        secretName: skaffold-docker-config
+    artifacts:
+    - image: movie-night-frontend
+      context: frontend
+      kaniko:
+        useNewRun: true
+    - image: movie-night-backend
+      context: backend
+      kaniko:
+        useNewRun: true
+  deploy:
+    helm:
+      releases:
       - name: movie-night
-        chartPath: .k8s
+        chartPath: helm
         artifactOverrides:
-          images.client: donalonzo/movie-night-client
-          images.server: donalonzo/movie-night-server
+          images.frontend: movie-night-frontend
+          images.backend: movie-night-backend
+        imageStrategy:
+          helm: {}
+- name: development
+  build:
+    artifacts:
+    - image: movie-night-frontend
+      context: frontend
+      docker:
+        buildArgs:
+          mode: watch
+      sync:
+        infer:
+        - "public/*"
+        - "src/**"
+    - image: movie-night-backend
+      context: backend
+      docker:
+        buildArgs:
+          mode: watch
+      sync:
+        infer:
+        - "src/**"
+  deploy:
+    helm:
+      releases:
+      - name: mongo
+        repo: https://charts.bitnami.com/bitnami
+        remoteChart: mongodb
+        version: 11.1.5
+      - name: movie-night
+        chartPath: helm
+        artifactOverrides:
+          images.frontend: movie-night-frontend
+          images.backend: movie-night-backend
         imageStrategy:
           helm: {}
         setValues:
-          host: movie.boman.lo
-          images.client.pullPolicy: Never
-          images.server.pullPolicy: Never
+          host: movie-night.dev.boman.io
+          mongo.host: mongo-mongodb.default.svc.cluster.local
+          images.frontend.pullPolicy: Never
+          images.backend.pullPolicy: Never
