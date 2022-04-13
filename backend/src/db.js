@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
-export const connectToDatabase = async ({ mongo: { host }}) => {
-  const url = `mongodb://${host}`;
+export const connectToDatabase = async ({ mongo: { host, port, database, username, password }}) => {
+  const url = `mongodb://${username && password ? `${username}:${password}@` : ``}${host}:${port}/${database}`;
   while (true) {
     try {
       const mongoClient = await MongoClient.connect(url, {

@@ -21,3 +21,19 @@ spec:
         env:
         - name: MONGO_HOST
           value: {{ .Values.mongo.host }}
+        - name: MONGO_PORT
+          value: "{{ .Values.mongo.port }}"
+        - name: MONGO_DATABASE
+          value: {{ .Values.mongo.database }}
+        - name: MONGO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: username
+              optional: true
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: password
+              optional: true

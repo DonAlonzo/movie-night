@@ -1,6 +1,16 @@
 host: movie-night.boman.io
+authentication:
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIGbMBAGByqGSM49AgEGBSuBBAAjA4GGAAQBbmYGD/xx5PtMYTE2281ef3uFsczX
+    TY8+RE4ktnMshYLZkCuDqJqVFjokotRlbdv15gcR7RI+Ww83L//snO3cNz8AHvlz
+    L1ndjL6HcMd69JjCT2fV+ut0iBmr+YkVgsmUyOwwaN14Ls4mDjZHtjzZKiRBikS3
+    WG/rUChqLtVMAs9ZnU8=
+    -----END PUBLIC KEY-----
 mongo:
   host: mongo.infrastructure.svc.cluster.local
+  port: 27017
+  database: movie-night
 images:
   frontend:
     repository: donalonzo/movie-night-frontend
