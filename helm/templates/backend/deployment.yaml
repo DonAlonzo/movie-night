@@ -19,6 +19,8 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: AUTHENTICATION_PUBLIC_KEY
+          value: {{ .Values.authentication.publicKey | quote }}
         - name: MONGO_HOST
           value: {{ .Values.mongo.host }}
         - name: MONGO_PORT

@@ -1,5 +1,5 @@
 export default {
-  privateKey: process.env.PRIVATE_KEY || "🔓",
+  authenticationPublicKey: process.env.AUTHENTICATION_PUBLIC_KEY || "🔓",
   mongo: {
     host: process.env.MONGO_HOST,
     port: process.env.MONGO_PORT,

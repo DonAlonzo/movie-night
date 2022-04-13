@@ -6,5 +6,7 @@ export default async config => {
 
   const app = express();
 
+  //jwt.verify(req.token, config.authenticationPublicKey);
+
   app.listen(80, () => console.log(`🚀 Server listening on 80`));
 };
