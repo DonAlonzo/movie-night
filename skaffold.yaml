@@ -55,6 +55,7 @@ profiles:
       - name: movie-night
         chartPath: helm
         artifactOverrides:
+          authentication.publicKey: 🔓
           images.frontend: movie-night-frontend
           images.backend: movie-night-backend
         imageStrategy:
