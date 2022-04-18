@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls
+spec:
+  dnsNames:
+  - {{ .Values.host }}
+  secretName: tls
+  issuerRef:
+    name: cluster-issuer
+    kind: ClusterIssuer
