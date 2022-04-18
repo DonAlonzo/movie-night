@@ -52,10 +52,11 @@ profiles:
         repo: https://charts.bitnami.com/bitnami
         remoteChart: mongodb
         version: 11.1.5
+        setValues:
+          auth.enabled: false
       - name: movie-night
         chartPath: helm
         artifactOverrides:
-          authentication.publicKey: 🔓
           images.frontend: movie-night-frontend
           images.backend: movie-night-backend
         imageStrategy:

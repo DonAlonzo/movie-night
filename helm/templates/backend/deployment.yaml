@@ -31,11 +31,11 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: username
+              key: mongo-username
               optional: true
         - name: MONGO_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: password
+              key: mongo-password
               optional: true

@@ -7,7 +7,10 @@ export const connectToDatabase = async ({ mongo: { host, port, database, usernam
       const mongoClient = await MongoClient.connect(url, {
         useUnifiedTopology: true
       });
-      return mongoClient.db("movie-night");
+      const db = mongoClient.db("movie-night");
+      return {
+        
+      };
     } catch (e) {
       console.error(`Failed to connect to ${url}. Retrying...`);
       await new Promise(resolve => setTimeout(resolve, 1000));

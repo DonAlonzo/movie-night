@@ -2,8 +2,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: ingress
-  annotations:
-    cert-manager.io/cluster-issuer: cluster-issuer
 spec:
   entryPoints:
   - websecure
@@ -14,11 +12,9 @@ spec:
     kind: Rule
     services:
     - name: frontend
-      kind: Service
       port: 80
-  - match: Host(`{{ .Values.host }}`) && PathPrefix(`/api`)
+  - match: Host(`{{ .Values.host }}`) && PathPrefix(`/graphql`)
     kind: Rule
     services:
     - name: backend
-      kind: Service
       port: 80

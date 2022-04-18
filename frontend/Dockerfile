@@ -1,6 +1,6 @@
-FROM node:14
+FROM node:16
 COPY package.json package.json
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY craco.config.js craco.config.js
 COPY public/ public/
 COPY src/ src/
