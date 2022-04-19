@@ -5,8 +5,8 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { merge } from 'lodash';
 import { connectToDatabase } from "./db";
-import initAuthor from './schema/Author';
-import initBook from './schema/Book';
+import initWatching from './schema/Watching';
+import initMovie from './schema/Movie';
 
 export default async config => {
   const db = await connectToDatabase(config); 
@@ -16,18 +16,12 @@ export default async config => {
   app.use(bearerToken());
 
   const types = [
-    initAuthor(db),
-    initBook(db)
+    initWatching(db),
+    initMovie(db)
   ];
 
-  const Query = `
-    type Query {
-      _empty: String
-    }
-  `;
-
   const server = new ApolloServer({
-    typeDefs: [Query].concat(types.map(type => type.typeDef)),
+    typeDefs: types.map(type => type.typeDef),
     resolvers: merge(types.map(type => type.resolvers)),
     context: ({ req }) => {
       if (!req.token) {
