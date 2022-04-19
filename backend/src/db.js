@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 
 export const connectToDatabase = async ({ mongo: { host, port, database, username, password }}) => {
-  const url = `mongodb://${typeof username !== 'undefined' && typeof password !== 'undefined' ? `${username}:${password}@` : ``}${host}:${port}/${database}`;
+  const url = `mongodb://${typeof username !== 'undefined' && typeof password !== 'undefined' ? `${encodeURIComponent(username)}:${encodeURIComponent(password)}@` : ``}${host}:${port}/${database}`;
   while (true) {
     try {
       const mongoClient = await MongoClient.connect(url, {
@@ -24,7 +24,7 @@ export const connectToDatabase = async ({ mongo: { host, port, database, usernam
         }
       };
     } catch (e) {
-      console.error(`Failed to connect to ${url} (${e.message}). Retrying...`);
+      console.error(`Failed to connect to database (${e.message}). Retrying...`);
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
